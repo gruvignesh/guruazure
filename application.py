@@ -7,8 +7,9 @@
 
 from flask import Flask, render_template,request
 import pypyodbc
-import random
+#import random
 import time
+import random
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
