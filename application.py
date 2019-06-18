@@ -29,7 +29,7 @@ def query_random():
 		start_intermediate_time = time.time()
 		#select = '''select * from quakes order by rand() limit 1 '''
 		#stmt = ibm_db.prepare(db, select)
-		cursor.execute("SELECT TOP 1 column FROM all_month ORDER BY NEWID()")
+		cursor.execute("select count(*) from all_month")
 		end_intermediate_time = time.time()
 		intermediate_time = end_intermediate_time - start_intermediate_time
 		list_of_times.append(intermediate_time)
