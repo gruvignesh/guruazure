@@ -6,10 +6,11 @@
 #     return "Hello World!"
 
 from flask import Flask, render_template,request
+import random
 import pypyodbc
 #import random
 import time
-import random
+# import random
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
@@ -48,7 +49,7 @@ def restricted():
     highermag = request.args['highermag']
     start_time1 = time.time()
     for i in range(0, int(query_limit)):
-        rngvalue = random.uniform(float(lowmag), float(highermag))
+        #rngvalue = random.uniform(float(lowmag), float(highermag))
         sql = 'select * from all_month where mag>=? '
         cursor.execute(sql, rngvalue)
     end_time1 = time.time()
