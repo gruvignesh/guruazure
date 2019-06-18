@@ -10,10 +10,14 @@ import random
 import pypyodbc
 #import random
 import time
+import redis
 # import random
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
-
+host_name='gururedis.redis.cache.windows.net'
+password='FmVTs5VAIAUQ4Ly84bYkTcNC9FXWIShAIqGXQSALvfM='
+cache = redis.StrictRedis(host=host_name, port=6380, password=password, ssl=True)
+#gururedis.redis.cache.windows.net:6380,password=FmVTs5VAIAUQ4Ly84bYkTcNC9FXWIShAIqGXQSALvfM=,ssl=True,abortConnect=False
 @app.route('/')
 def hello_world():
     cursor = connection.cursor()
@@ -42,6 +46,22 @@ def query_random():
 	#list_of_times=[10,20,30]
 	return render_template('graph.html', time_taken=time_taken, list_of_times=list_of_times)
 
+# @app.route('/restricted')
+# def restricted():
+# 	cursor=connection.cursor()
+# 	query_limit = request.args['query_limit1']
+# 	lowmag = request.args['lowmag']
+# 	highermag = request.args['highermag']
+# 	start_time1 = time.time()
+# 	for i in range(0, int(query_limit)):
+# 		rngvalue = random.uniform(float(lowmag), float(highermag))
+# 		sql = 'select * from all_month where mag>=? '
+# 		cursor.execute(sql, (rngvalue,))
+# 	end_time1 = time.time()
+# 	time_taken = (end_time1 - start_time1) / int(query_limit)
+# 	#return render_template('restricted.html',time_taken=time_taken)
+# 	return render_template('restricted.html',time_taken=time_taken)
+
 @app.route('/restricted')
 def restricted():
 	cursor=connection.cursor()
@@ -51,13 +71,19 @@ def restricted():
 	start_time1 = time.time()
 	for i in range(0, int(query_limit)):
 		rngvalue = random.uniform(float(lowmag), float(highermag))
-		sql = 'select * from all_month where mag>=? '
-		cursor.execute(sql, (rngvalue,))
+		if not cache.get(rngvalue):
+			sql = 'select * from all_month where mag>=? '
+			cursor.execute(sql, (rngvalue,))
+			rows=cursor.fetchall()
+			cache.set(rngvalue,str(rows))
+			#flash('its in the db'+str(rngvalue))
+		else:
+			rows_string=cache.get(rngvalue)
+			#flash('its in the cache '+str(rngvalue))
 	end_time1 = time.time()
 	time_taken = (end_time1 - start_time1) / int(query_limit)
 	#return render_template('restricted.html',time_taken=time_taken)
 	return render_template('restricted.html',time_taken=time_taken)
-
 
 if __name__ == '__main__':
     app.run()
