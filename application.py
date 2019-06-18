@@ -17,7 +17,7 @@ connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp
 @app.route('/')
 def hello_world():
     cursor = connection.cursor()
-    cursor.execute("select count(*) from all_month")
+    cursor.execute("select count(*) from quake6")
     rows = cursor.fetchall()
     count = rows[0][0]
     return render_template('index.html', count=count)
