@@ -48,7 +48,7 @@ def restricted():
     for i in range(0, int(query_limit)):
         rngvalue = random.uniform(float(lowmag), float(highermag))
         sql = 'select * from all_month where mag>=? '
-        cursor.execute(sql, (rngvalue,))
+        cursor.execute(sql, rngvalue)
     end_time = time()
     time_taken = (end_time - start_time) / int(query_limit)
     return render_template('restricted.html',time_taken=time_taken)
