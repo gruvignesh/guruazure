@@ -12,6 +12,11 @@
     </h1>
 <br/><br/>
 <h1> the number of lines in the db is {{ count }}</h1>
+<form name="query_random" action = "/query_random" method = "get" enctype = "multipart/form-data">
+    Enter the number of queries to process: <input type="number" name="query_limit">  <!-- Latitude: <input type="text" name="lat">  Longitude: <input type="text" name="long"> -->
+    <!-- Distance: <input type="text" name="radius"><br> -->
+    <input type="Submit" value="Search">
+</form>
 
 
 </center>
