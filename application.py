@@ -20,8 +20,8 @@ def hello_world():
 
 @app.route('/query_random', methods=['GET', 'POST'])
 def query_random():
-	# cursor=connection.cursor()
-	# query_limit = request.args['query_limit']
+	cursor=connection.cursor()
+	query_limit = request.args['query_limit']
 	# start_time = time.time()
 	# list_of_times = []
 	# for i in range(0, int(query_limit)):
@@ -36,7 +36,7 @@ def query_random():
 	# time_taken = (end_time - start_time) / int(query_limit)
 	time_taken=89
 	list_of_times=[10,20,30]
-	return render_template('graph.html', time_taken=time_taken, list_of_times=list_of_times)
+	return render_template('graph.html', time_taken=query_limit, list_of_times=list_of_times)
 
 
 
