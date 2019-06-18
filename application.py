@@ -55,7 +55,7 @@ def restricted():
 		cursor.execute(sql, rngvalue)
 	end_time1 = time.time()
 	time_taken = (end_time1 - start_time1) / int(query_limit)
-return render_template('restricted.html',time_taken=time_taken)
+	return render_template('restricted.html',time_taken=time_taken)
 
 
 if __name__ == '__main__':
