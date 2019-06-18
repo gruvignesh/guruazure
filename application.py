@@ -44,6 +44,7 @@ def query_random():
 
 @app.route('/restricted')
 def restricted():
+	cursor=connection.cursor()
 	query_limit = request.args['query_limit1']
 	lowmag = request.args['lowmag']
 	highermag = request.args['highermag']
