@@ -17,8 +17,10 @@
 
 <table border="1">
     <tr>
+        <th>time</th>
         <th>latitude</th>
         <th>longitude</th>
+        <th>depth_error</th>
     </tr>
     {% for row in rows %}
         <tr>
@@ -27,6 +29,12 @@
             </td>
             <td>
                 <center>{{ row[1] }}</center>
+            </td>
+            <td>
+                <center>{{ row[2] }}</center>
+            </td>
+            <td>
+                <center>{{ row[3] }}</center>
             </td>
         </tr>
     {% endfor %}
