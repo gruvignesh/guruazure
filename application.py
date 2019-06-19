@@ -49,14 +49,25 @@ def restricted():
 	lowmag = request.args['lowmag']
 	highermag = request.args['highermag']
 	start_time1 = time.time()
+	list_of_times = []
+	range_pairs=[]
 	for i in range(0, int(query_limit)):
-		rngvalue = random.uniform(float(lowmag), float(highermag))
-		sql = 'select * from all_month where mag>=? '
-		cursor.execute(sql, (rngvalue,))
+		rang=[]
+		start_intermediate_time = time.time()
+		rngvalue1 = random.uniform(float(lowmag), float(highermag))
+		rngvalue2 = random.uniform(float(lowmag), float(highermag))
+		rang.append(rngvalue1)
+		rang.append(rngvalue2)
+		sql='select count(*) from quake6 where depthError between ? AND ?'
+		cursor.execute(sql, (rngvalue1,rngvalue2))
+		end_intermediate_time = time.time()
+		intermediate_time = end_intermediate_time - start_intermediate_time
+		list_of_times.append(intermediate_time)
+		range_pairs.append(rang)
 	end_time1 = time.time()
 	time_taken = (end_time1 - start_time1) / int(query_limit)
 	#return render_template('restricted.html',time_taken=time_taken)
-	return render_template('restricted.html',time_taken=time_taken)
+	return render_template('restricted.html',time_taken=time_taken,list_of_times=list_of_times,range_pairs=range_pairs)
 
 @app.route('/question5')
 def question5():
