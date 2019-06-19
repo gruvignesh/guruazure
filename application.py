@@ -65,8 +65,8 @@ def question5():
 	lowmag = request.args['lowdep']
 	highermag = request.args['higherdep']
 	longitude=request.args['Longitude']
-	sql='select latitude,longitude from quake6 where depthError between ? AND ?'
-	cursor.execute(sql, (lowmag,highermag))
+	sql='select time,latitude,longitude,depthError from quake6 where (depthError between ? AND ?) AND longitude>? '
+	cursor.execute(sql, (lowmag,highermag,longitude))
 	rows = cursor.fetchall()
 	#start_time1 = time.time()
 	# for i in range(0, int(query_limit)):
