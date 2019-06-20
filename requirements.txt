@@ -8,3 +8,4 @@ Werkzeug==0.14.1
 pypyodbc
 requests
 random
+pygal==2.4.0

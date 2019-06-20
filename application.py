@@ -10,18 +10,54 @@ import random
 import pypyodbc
 #import random
 import time
+import pygal
 # import random
 #import redis
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
+# @app.route('/')
+# def hello_world():
+#     cursor = connection.cursor()
+#     cursor.execute("select count(*) from quake6")
+#     rows = cursor.fetchall()
+#     count = rows[0][0]
+#     return render_template('index.html', count=count)
 @app.route('/')
 def hello_world():
-    cursor = connection.cursor()
-    cursor.execute("select count(*) from quake6")
-    rows = cursor.fetchall()
-    count = rows[0][0]
+    return render_template('common.html', )
+
+
+@app.route('/question1', )
+def question1():
+    return render_template('question1.html')
+    
+@app.route('/question1_execute', methods=['GET'])
+def question1_execute():
+    bar_chart = pygal.Bar(width=1000, height=500)
+    sql = "select TOP 5 latitude,depth from quake6"
+    # print(sql)
+    cursor = conn.cursor()
+    result = cursor.execute(sql).fetchall()
+    population_values = []
+    state = []
+    for r in result:
+        state.append(str(r[0]))
+        population_values.append(r[1])
+        # state = r[0]
+        # population_values = []
+        bar_chart.add(state, population_values)
+    return render_template('question1.html', chart=bar_chart.render_data_uri())
+
+@app.route('/charting')
+def charting():
+    # cursor = connection.cursor()
+    # cursor.execute("select count(*) from quake6")
+    # rows = cursor.fetchall()
+    # count = rows[0][0]
     return render_template('index.html', count=count)
+
+
 
 @app.route('/query_random', methods=['GET', 'POST'])
 def query_random():
@@ -103,6 +139,8 @@ def question5():
 def chartcheck():
 	cursor=connection.cursor()
 	query_limit = request.args['chart1']
+	xaxis=['giraffes', 'orangutans', 'monkeys']
+	yaxis=[20, 14, 23]
 	# start_time = time.time()
 	# list_of_times = []
 	# for i in range(0, int(query_limit)):
@@ -117,7 +155,7 @@ def chartcheck():
 	# time_taken = (end_time - start_time) / int(query_limit)
 	#time_taken=89
 	#list_of_times=[10,20,30]
-	return render_template('test.html')
+	return render_template('test.html',xaxis=json.dumps(xaxis),json.dumps(yaxis))
 
 if __name__ == '__main__':
     app.run()
