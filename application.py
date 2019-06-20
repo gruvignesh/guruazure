@@ -171,7 +171,7 @@ def barchart():
 @app.route('/piechart', methods=['GET', 'POST'])
 def piechart():
 	cursor=connection.cursor()
-	query_limit = request.args['chart1']
+	query_limit = request.args['chart2']
 	sql="select place from quake6 where place like '%Texas%' or place like '%CA%'"
 	cursor.execute(sql)
 	rows = cursor.fetchall()
