@@ -11,7 +11,7 @@ import pypyodbc
 #import random
 import time
 # import random
-import redis
+#import redis
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
@@ -43,40 +43,40 @@ def query_random():
 	#list_of_times=[10,20,30]
 	return render_template('graph.html', time_taken=time_taken, list_of_times=list_of_times)
 
-@app.route('/restricted')
-def restricted():
-	cursor=connection.cursor()
-	host_name='gururedis.redis.cache.windows.net'
-	password='FmVTs5VAIAUQ4Ly84bYkTcNC9FXWIShAIqGXQSALvfM='
-	cache = redis.StrictRedis(host=host_name, port=6380, password=password, ssl=True)
-	query_limit = request.args['query_limit1']
-	lowmag = request.args['lowmag']
-	highermag = request.args['highermag']
-	start_time1 = time.time()
-	list_of_times = []
-	range_pairs=[]
-	for i in range(0, int(query_limit)):
-		rang=[]
-		start_intermediate_time = time.time()
-		rngvalue1 = random.uniform(float(lowmag), float(highermag))
-		rngvalue2 = random.uniform(float(lowmag), float(highermag))
-		rang.append(rngvalue1)
-		rang.append(rngvalue2)
-		if not cache.get(rngvalue1):
-			if not cache.get(rngvalue2):
-				sql='select count(*) from quake6 where depthError between ? AND ?'
-				rows = cursor.fetchall()
-				cache.set(magnitude, str(rows))
-		else:
-			rows_string = cache.get(magnitude)
-		end_intermediate_time = time.time()
-		intermediate_time = end_intermediate_time - start_intermediate_time
-		list_of_times.append(intermediate_time)
-		range_pairs.append(rang)
-	end_time1 = time.time()
-	time_taken = (end_time1 - start_time1) / int(query_limit)
-	#return render_template('restricted.html',time_taken=time_taken)
-	return render_template('restricted.html',time_taken=time_taken,list_of_times=list_of_times,range_pairs=range_pairs)
+# @app.route('/restricted')
+# def restricted():
+# 	cursor=connection.cursor()
+# 	host_name='gururedis.redis.cache.windows.net'
+# 	password='FmVTs5VAIAUQ4Ly84bYkTcNC9FXWIShAIqGXQSALvfM='
+# 	cache = redis.StrictRedis(host=host_name, port=6380, password=password, ssl=True)
+# 	query_limit = request.args['query_limit1']
+# 	lowmag = request.args['lowmag']
+# 	highermag = request.args['highermag']
+# 	start_time1 = time.time()
+# 	list_of_times = []
+# 	range_pairs=[]
+# 	for i in range(0, int(query_limit)):
+# 		rang=[]
+# 		start_intermediate_time = time.time()
+# 		rngvalue1 = random.uniform(float(lowmag), float(highermag))
+# 		rngvalue2 = random.uniform(float(lowmag), float(highermag))
+# 		rang.append(rngvalue1)
+# 		rang.append(rngvalue2)
+# 		if not cache.get(rngvalue1):
+# 			if not cache.get(rngvalue2):
+# 				sql='select count(*) from quake6 where depthError between ? AND ?'
+# 				rows = cursor.fetchall()
+# 				cache.set(magnitude, str(rows))
+# 		else:
+# 			rows_string = cache.get(magnitude)
+# 		end_intermediate_time = time.time()
+# 		intermediate_time = end_intermediate_time - start_intermediate_time
+# 		list_of_times.append(intermediate_time)
+# 		range_pairs.append(rang)
+# 	end_time1 = time.time()
+# 	time_taken = (end_time1 - start_time1) / int(query_limit)
+# 	#return render_template('restricted.html',time_taken=time_taken)
+# 	return render_template('restricted.html',time_taken=time_taken,list_of_times=list_of_times,range_pairs=range_pairs)
 
 @app.route('/question5')
 def question5():
