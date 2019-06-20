@@ -1,0 +1,28 @@
+<html>
+ <head>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+    var xaxis = {{xaxis | safe}};
+    var yaxis = {{yaxis | safe}};
+    var data = [{
+  x: yaxis,
+  y: xaxis,
+  type: 'pie'
+}];
+var layout = {
+  height: 400,
+  width: 500
+};
+
+
+Plotly.newPlot('myDiv', data, layout, {showSendToCloud:true});
+  </script>
+</body>
+</html>

@@ -136,8 +136,8 @@ def question5():
 	return render_template('output.html',rows=rows)
 
 
-@app.route('/chartcheck', methods=['GET', 'POST'])
-def chartcheck():
+@app.route('/barchart', methods=['GET', 'POST'])
+def barchart():
 	cursor=connection.cursor()
 	query_limit = request.args['chart1']
 	sql='select TOP 5 latitude,depthError from quake6'
@@ -166,6 +166,40 @@ def chartcheck():
 	#time_taken=89
 	#list_of_times=[10,20,30]
 	return render_template('test.html',xaxis=json.dumps(xaxis),yaxis=json.dumps(yaxis))
+
+
+@app.route('/piechart', methods=['GET', 'POST'])
+def piechart():
+	cursor=connection.cursor()
+	query_limit = request.args['chart1']
+	sql="select place from quake6 where place like '%Texas%' or place like '%CA%'"
+	cursor.execute(sql)
+	rows = cursor.fetchall()
+	xaxis=[]
+	yaxis=[]
+	for r in rows:
+		xaxis.append(r[0].split(',', 1)[-1].strip())
+		#yaxis.append(r[1])
+	yaxis.append(a.count('Texas'))
+	yaxis.append(a.count('CA'))
+	#xaxis=['g', 'o', 'm']
+	#yaxis=[20, 14, 23]
+	# start_time = time.time()
+	# list_of_times = []
+	# for i in range(0, int(query_limit)):
+	# 	start_intermediate_time = time.time()
+	# 	#select = '''select * from quakes order by rand() limit 1 '''
+	# 	#stmt = ibm_db.prepare(db, select)
+	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
+	# 	end_intermediate_time = time.time()
+	# 	intermediate_time = end_intermediate_time - start_intermediate_time
+	# 	list_of_times.append(intermediate_time)
+	# end_time = time.time()
+	# time_taken = (end_time - start_time) / int(query_limit)
+	#time_taken=89
+	#list_of_times=[10,20,30]
+	return render_template('test1.html',xaxis=json.dumps(xaxis),yaxis=json.dumps(yaxis))
+
 
 if __name__ == '__main__':
     app.run()
