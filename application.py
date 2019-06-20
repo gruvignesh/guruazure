@@ -11,6 +11,7 @@ import pypyodbc
 #import random
 import time
 # import random
+import redis
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
@@ -45,6 +46,9 @@ def query_random():
 @app.route('/restricted')
 def restricted():
 	cursor=connection.cursor()
+	host_name='gururedis.redis.cache.windows.net'
+	password='FmVTs5VAIAUQ4Ly84bYkTcNC9FXWIShAIqGXQSALvfM='
+	cache = redis.StrictRedis(host=host_name, port=6380, password=password, ssl=True)
 	query_limit = request.args['query_limit1']
 	lowmag = request.args['lowmag']
 	highermag = request.args['highermag']
@@ -58,8 +62,13 @@ def restricted():
 		rngvalue2 = random.uniform(float(lowmag), float(highermag))
 		rang.append(rngvalue1)
 		rang.append(rngvalue2)
-		sql='select count(*) from quake6 where depthError between ? AND ?'
-		cursor.execute(sql, (rngvalue1,rngvalue2))
+		if not cache.get(rngvalue1):
+			if not cache.get(rngvalue2):
+				sql='select count(*) from quake6 where depthError between ? AND ?'
+				rows = cursor.fetchall()
+				cache.set(magnitude, str(rows))
+		else:
+			rows_string = cache.get(magnitude)
 		end_intermediate_time = time.time()
 		intermediate_time = end_intermediate_time - start_intermediate_time
 		list_of_times.append(intermediate_time)
@@ -89,6 +98,26 @@ def question5():
 	#return render_template('restricted.html',time_taken=time_taken)
 	return render_template('output.html',rows=rows)
 
+
+@app.route('/chartcheck', methods=['GET', 'POST'])
+def query_random():
+	cursor=connection.cursor()
+	query_limit = request.args['chart1']
+	# start_time = time.time()
+	# list_of_times = []
+	# for i in range(0, int(query_limit)):
+	# 	start_intermediate_time = time.time()
+	# 	#select = '''select * from quakes order by rand() limit 1 '''
+	# 	#stmt = ibm_db.prepare(db, select)
+	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
+	# 	end_intermediate_time = time.time()
+	# 	intermediate_time = end_intermediate_time - start_intermediate_time
+	# 	list_of_times.append(intermediate_time)
+	# end_time = time.time()
+	# time_taken = (end_time - start_time) / int(query_limit)
+	#time_taken=89
+	#list_of_times=[10,20,30]
+	return render_template('test.html')
 
 if __name__ == '__main__':
     app.run()
