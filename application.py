@@ -10,28 +10,28 @@ import random
 import pypyodbc
 #import random
 import time
-import pygal
+#import pygal
 # import random
 #import redis
 app = Flask(__name__)
 connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
-# @app.route('/')
-# def hello_world():
-#     cursor = connection.cursor()
-#     cursor.execute("select count(*) from quake6")
-#     rows = cursor.fetchall()
-#     count = rows[0][0]
-#     return render_template('index.html', count=count)
 @app.route('/')
 def hello_world():
-    return render_template('common.html', )
+    cursor = connection.cursor()
+    cursor.execute("select count(*) from quake6")
+    rows = cursor.fetchall()
+    count = rows[0][0]
+    return render_template('index.html', count=count)
+# @app.route('/')
+# def hello_world():
+#     return render_template('common.html', )
 
 
 @app.route('/question1', )
 def question1():
     return render_template('question1.html')
-    
+
 @app.route('/question1_execute', methods=['GET'])
 def question1_execute():
     bar_chart = pygal.Bar(width=1000, height=500)
@@ -135,27 +135,27 @@ def question5():
 	return render_template('output.html',rows=rows)
 
 
-# @app.route('/chartcheck', methods=['GET', 'POST'])
-# def chartcheck():
-# 	cursor=connection.cursor()
-# 	query_limit = request.args['chart1']
-# 	xaxis=['giraffes', 'orangutans', 'monkeys']
-# 	yaxis=[20, 14, 23]
-# 	# start_time = time.time()
-# 	# list_of_times = []
-# 	# for i in range(0, int(query_limit)):
-# 	# 	start_intermediate_time = time.time()
-# 	# 	#select = '''select * from quakes order by rand() limit 1 '''
-# 	# 	#stmt = ibm_db.prepare(db, select)
-# 	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
-# 	# 	end_intermediate_time = time.time()
-# 	# 	intermediate_time = end_intermediate_time - start_intermediate_time
-# 	# 	list_of_times.append(intermediate_time)
-# 	# end_time = time.time()
-# 	# time_taken = (end_time - start_time) / int(query_limit)
-# 	#time_taken=89
-# 	#list_of_times=[10,20,30]
-# 	return render_template('test.html',xaxis=json.dumps(xaxis),json.dumps(yaxis))
+@app.route('/chartcheck', methods=['GET', 'POST'])
+def chartcheck():
+	cursor=connection.cursor()
+	query_limit = request.args['chart1']
+	xaxis=['g', 'o', 'm']
+	yaxis=[20, 14, 23]
+	# start_time = time.time()
+	# list_of_times = []
+	# for i in range(0, int(query_limit)):
+	# 	start_intermediate_time = time.time()
+	# 	#select = '''select * from quakes order by rand() limit 1 '''
+	# 	#stmt = ibm_db.prepare(db, select)
+	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
+	# 	end_intermediate_time = time.time()
+	# 	intermediate_time = end_intermediate_time - start_intermediate_time
+	# 	list_of_times.append(intermediate_time)
+	# end_time = time.time()
+	# time_taken = (end_time - start_time) / int(query_limit)
+	#time_taken=89
+	#list_of_times=[10,20,30]
+	return render_template('test.html',xaxis=json.dumps(xaxis),yaxis=json.dumps(yaxis))
 
 if __name__ == '__main__':
     app.run()
