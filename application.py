@@ -135,27 +135,27 @@ def question5():
 	return render_template('output.html',rows=rows)
 
 
-@app.route('/chartcheck', methods=['GET', 'POST'])
-def chartcheck():
-	cursor=connection.cursor()
-	query_limit = request.args['chart1']
-	xaxis=['giraffes', 'orangutans', 'monkeys']
-	yaxis=[20, 14, 23]
-	# start_time = time.time()
-	# list_of_times = []
-	# for i in range(0, int(query_limit)):
-	# 	start_intermediate_time = time.time()
-	# 	#select = '''select * from quakes order by rand() limit 1 '''
-	# 	#stmt = ibm_db.prepare(db, select)
-	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
-	# 	end_intermediate_time = time.time()
-	# 	intermediate_time = end_intermediate_time - start_intermediate_time
-	# 	list_of_times.append(intermediate_time)
-	# end_time = time.time()
-	# time_taken = (end_time - start_time) / int(query_limit)
-	#time_taken=89
-	#list_of_times=[10,20,30]
-	return render_template('test.html',xaxis=json.dumps(xaxis),json.dumps(yaxis))
+# @app.route('/chartcheck', methods=['GET', 'POST'])
+# def chartcheck():
+# 	cursor=connection.cursor()
+# 	query_limit = request.args['chart1']
+# 	xaxis=['giraffes', 'orangutans', 'monkeys']
+# 	yaxis=[20, 14, 23]
+# 	# start_time = time.time()
+# 	# list_of_times = []
+# 	# for i in range(0, int(query_limit)):
+# 	# 	start_intermediate_time = time.time()
+# 	# 	#select = '''select * from quakes order by rand() limit 1 '''
+# 	# 	#stmt = ibm_db.prepare(db, select)
+# 	# 	cursor.execute("select TOP 1 * from all_month order by rand()")
+# 	# 	end_intermediate_time = time.time()
+# 	# 	intermediate_time = end_intermediate_time - start_intermediate_time
+# 	# 	list_of_times.append(intermediate_time)
+# 	# end_time = time.time()
+# 	# time_taken = (end_time - start_time) / int(query_limit)
+# 	#time_taken=89
+# 	#list_of_times=[10,20,30]
+# 	return render_template('test.html',xaxis=json.dumps(xaxis),json.dumps(yaxis))
 
 if __name__ == '__main__':
     app.run()
