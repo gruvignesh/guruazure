@@ -32,22 +32,22 @@ def hello_world():
 def question1():
     return render_template('question1.html')
 
-@app.route('/question1_execute', methods=['GET'])
-def question1_execute():
-    bar_chart = pygal.Bar(width=1000, height=500)
-    sql = "select TOP 5 latitude,depth from quake6"
-    # print(sql)
-    cursor = conn.cursor()
-    result = cursor.execute(sql).fetchall()
-    population_values = []
-    state = []
-    for r in result:
-        state.append(str(r[0]))
-        population_values.append(r[1])
-        # state = r[0]
-        # population_values = []
-        bar_chart.add(state, population_values)
-    return render_template('question1.html', chart=bar_chart.render_data_uri())
+# @app.route('/question1_execute', methods=['GET'])
+# def question1_execute():
+#     bar_chart = pygal.Bar(width=1000, height=500)
+#     sql = "select TOP 5 latitude,depth from quake6"
+#     # print(sql)
+#     cursor = conn.cursor()
+#     result = cursor.execute(sql).fetchall()
+#     population_values = []
+#     state = []
+#     for r in result:
+#         state.append(str(r[0]))
+#         population_values.append(r[1])
+#         # state = r[0]
+#         # population_values = []
+#         bar_chart.add(state, population_values)
+#     return render_template('question1.html', chart=bar_chart.render_data_uri())
 
 @app.route('/charting')
 def charting():
