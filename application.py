@@ -140,8 +140,17 @@ def question5():
 def chartcheck():
 	cursor=connection.cursor()
 	query_limit = request.args['chart1']
-	xaxis=['g', 'o', 'm']
-	yaxis=[20, 14, 23]
+	sql='select TOP 5 latitude,depthError from quake6'
+	cursor.execute(sql)
+	rows = cursor.fetchall()
+	xaxis=[]
+	yaxis=[]
+	for r in rows:
+		xaxis.append(r[0])
+		yaxis.append(r[1])
+
+	#xaxis=['g', 'o', 'm']
+	#yaxis=[20, 14, 23]
 	# start_time = time.time()
 	# list_of_times = []
 	# for i in range(0, int(query_limit)):
