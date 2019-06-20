@@ -119,12 +119,15 @@ def query_random():
 def question5():
 	cursor=connection.cursor()
 	#query_limit = request.args['query_limit1']
-	lowmag = request.args['lowdep']
-	highermag = request.args['higherdep']
-	longitude=request.args['Longitude']
-	sql='select time,latitude,longitude,depthError from quake6 where (depthError between ? AND ?) AND longitude>? '
-	cursor.execute(sql, (lowmag,highermag,longitude))
+	#lowmag = request.args['lowdep']
+	#highermag = request.args['higherdep']
+	#longitude=request.args['Longitude']
+	sql='select StateName from voting11 where TotalPop between 2000 and 8000 '
+	sql1='select StateName from voting11 where TotalPop between 8000 and 40000 '
+	cursor.execute(sql)
 	rows = cursor.fetchall()
+	cursor.execute(sql1)
+	rows1 = cursor.fetchall()
 	#start_time1 = time.time()
 	# for i in range(0, int(query_limit)):
 	# 	rngvalue = random.uniform(float(lowmag), float(highermag))
@@ -133,7 +136,7 @@ def question5():
 	#end_time1 = time.time()
 	#time_taken = (end_time1 - start_time1) / int(query_limit)
 	#return render_template('restricted.html',time_taken=time_taken)
-	return render_template('output.html',rows=rows)
+	return render_template('output.html',rows=rows,rows1=rows1)
 
 
 @app.route('/barchart', methods=['GET', 'POST'])

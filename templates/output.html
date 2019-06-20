@@ -14,27 +14,29 @@
         <!-- The average total time required to execute the restricted queries is {{ time_taken }} seconds -->
     </h1>
 
+<h1> States between 2 to 8 million</h1><br>
 
 <table border="1">
     <tr>
-        <th>time</th>
-        <th>latitude</th>
-        <th>longitude</th>
-        <th>depth_error</th>
+        <th>State</th>
     </tr>
     {% for row in rows %}
         <tr>
             <td>
                 {{ row[0] }}
             </td>
+        </tr>
+    {% endfor %}
+</table>
+<h1> States between 8 to 40 million</h1><br>
+<table border="1">
+    <tr>
+        <th>State</th>
+    </tr>
+    {% for row1 in rows1 %}
+        <tr>
             <td>
-                <center>{{ row[1] }}</center>
-            </td>
-            <td>
-                <center>{{ row[2] }}</center>
-            </td>
-            <td>
-                <center>{{ row[3] }}</center>
+                {{ row1[0] }}
             </td>
         </tr>
     {% endfor %}
