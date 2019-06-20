@@ -100,7 +100,7 @@ def question5():
 
 
 @app.route('/chartcheck', methods=['GET', 'POST'])
-def query_random():
+def chartcheck():
 	cursor=connection.cursor()
 	query_limit = request.args['chart1']
 	# start_time = time.time()
