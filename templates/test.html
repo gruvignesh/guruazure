@@ -12,13 +12,14 @@
     var xaxis = {{xaxis | safe}};
     var yaxis = {{yaxis | safe}};
     var data = [{
-  x: yaxis,
-  y: xaxis,
-  type: 'bar'
+  x: xaxis,
+  y: yaxis,
+  mode: 'markers',
+  type: 'scatter'
 }];
 var layout = {
-  title: 'Latitude vs Depth error',
-  xaxis: {title: 'USD (millions)',
+  title: 'Total Population vs Registered',
+  xaxis: {title: 'Total population in millions)',
     titlefont: {
       size: 16,
       color: 'rgb(107, 107, 107)'
@@ -27,7 +28,7 @@ var layout = {
       color: 'rgb(107, 107, 107)'
     }},
   yaxis: {
-    title: 'USD (millions)',
+    title: 'Registered in millions',
     titlefont: {
       size: 16,
       color: 'rgb(107, 107, 107)'

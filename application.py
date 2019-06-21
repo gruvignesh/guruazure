@@ -142,8 +142,10 @@ def question5():
 @app.route('/barchart', methods=['GET', 'POST'])
 def barchart():
 	cursor=connection.cursor()
-	query_limit = request.args['chart1']
-	sql='select TOP 5 latitude,depthError from quake6'
+	#query_limit = request.args['chart1']
+	population1 = request.args['pop1']
+	population2=request.args['pop2']
+	sql='select TotalPop,Registered from voting11 where TotalPop between pop1 and pop2'
 	cursor.execute(sql)
 	rows = cursor.fetchall()
 	xaxis=[]
