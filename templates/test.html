@@ -6,18 +6,18 @@
 </head>
 
 <body>
-  
+  <h1>Nagaraj, Guru Vignesh</h1>
+  <h1>1001382893</h1>
   <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
   <script>
     var xaxis = {{xaxis | safe}};
     var yaxis = {{yaxis | safe}};
     var data = [{
-  x: xaxis,
-  y: yaxis,
-  mode: 'markers',
-  type: 'scatter'
+  values: xaxis,
+  labels: yaxis,
+  type: 'pie'
 }];
-var layout = {
+/*var layout = {
   title: 'Total Population vs Registered',
   xaxis: {title: 'Total population in millions)',
     titlefont: {
@@ -47,8 +47,11 @@ var layout = {
   barmode: 'group',
   bargap: 0.15,
   bargroupgap: 0.1
+};*/
+var layout = {
+  height: 400,
+  width: 500
 };
-
 
 Plotly.newPlot('myDiv', data, layout, {showSendToCloud:true});
   </script>

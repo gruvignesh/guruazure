@@ -145,7 +145,7 @@ def barchart():
 	#query_limit = request.args['chart1']
 	population1 = request.args['pop1']
 	population2=request.args['pop2']
-	sql='select TotalPop,Registered from voting11 where TotalPop between ? and ?'
+	sql='select count(*),StateName from voting11 where TotalPop between ? and ? group by StateName'
 	cursor.execute(sql,(population1,population2))
 	rows = cursor.fetchall()
 	xaxis=[]
