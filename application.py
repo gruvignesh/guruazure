@@ -118,16 +118,22 @@ def query_random():
 @app.route('/question5')
 def question5():
 	cursor=connection.cursor()
-	#query_limit = request.args['query_limit1']
+	range1 = int(request.args['range'])
 	#lowmag = request.args['lowdep']
 	#highermag = request.args['higherdep']
 	#longitude=request.args['Longitude']
-	sql='select StateName from voting11 where TotalPop between 2000 and 8000 '
-	sql1='select StateName from voting11 where TotalPop between 8000 and 40000 '
-	cursor.execute(sql)
-	rows = cursor.fetchall()
-	cursor.execute(sql1)
-	rows1 = cursor.fetchall()
+	x=[]
+	y=[]
+	for temp in range(0,range1):
+		x.append(temp)
+		temp1=(temp*temp*temp)%10
+		y.append(temp1)
+	#sql='select StateName from voting11 where TotalPop between 2000 and 8000 '
+	#sql1='select StateName from voting11 where TotalPop between 8000 and 40000 '
+	#cursor.execute(sql)
+	#rows = cursor.fetchall()
+	#cursor.execute(sql1)
+	#rows1 = cursor.fetchall()
 	#start_time1 = time.time()
 	# for i in range(0, int(query_limit)):
 	# 	rngvalue = random.uniform(float(lowmag), float(highermag))
@@ -136,7 +142,7 @@ def question5():
 	#end_time1 = time.time()
 	#time_taken = (end_time1 - start_time1) / int(query_limit)
 	#return render_template('restricted.html',time_taken=time_taken)
-	return render_template('output.html',rows=rows,rows1=rows1)
+	return render_template('test1.html',xaxis=json.dumps(x),yaxis=json.dumps(y))
 
 
 @app.route('/barchart', methods=['GET', 'POST'])
@@ -145,14 +151,24 @@ def barchart():
 	#query_limit = request.args['chart1']
 	population1 = request.args['pop1']
 	population2=request.args['pop2']
+	population3=request.args['pop3']
+	population4=request.args['pop4']
 	sql='select count(*),StateName from voting11 where TotalPop between ? and ? group by StateName'
+	sql1='select count(*),StateName from voting11 where TotalPop between ? and ? group by StateName'
 	cursor.execute(sql,(population1,population2))
 	rows = cursor.fetchall()
+	cursor.execute(sql,(population3,population4))
+	rows1 = cursor.fetchall()
 	xaxis=[]
 	yaxis=[]
+	zaxis=[]
+	paxis=[]
 	for r in rows:
 		xaxis.append(r[0])
 		yaxis.append(r[1])
+	for r1 in rows1:
+		zaxis.append(r1[0])
+		paxis.append(r1[1])
 
 	#xaxis=['g', 'o', 'm']
 	#yaxis=[20, 14, 23]
@@ -170,7 +186,7 @@ def barchart():
 	# time_taken = (end_time - start_time) / int(query_limit)
 	#time_taken=89
 	#list_of_times=[10,20,30]
-	return render_template('test.html',xaxis=json.dumps(xaxis),yaxis=json.dumps(yaxis))
+	return render_template('test.html',xaxis=json.dumps(xaxis),yaxis=json.dumps(yaxis),zaxis=json.dumps(zaxis),paxis=json.dumps(paxis))
 
 
 @app.route('/piechart', methods=['GET', 'POST'])
