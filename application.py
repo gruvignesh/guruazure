@@ -128,6 +128,12 @@ def question5():
 		x.append(temp)
 		temp1=(temp*temp*temp)%10
 		y.append(temp1)
+		my_dict = {i: y.count(i) for i in y}
+
+	z=[]
+	for j in my_dict:
+		z.append(my_dict[j])
+
 	#sql='select StateName from voting11 where TotalPop between 2000 and 8000 '
 	#sql1='select StateName from voting11 where TotalPop between 8000 and 40000 '
 	#cursor.execute(sql)
@@ -142,7 +148,7 @@ def question5():
 	#end_time1 = time.time()
 	#time_taken = (end_time1 - start_time1) / int(query_limit)
 	#return render_template('restricted.html',time_taken=time_taken)
-	return render_template('test1.html',xaxis=json.dumps(x),yaxis=json.dumps(y))
+	return render_template('test1.html',xaxis=json.dumps(x),yaxis=json.dumps(z))
 
 
 @app.route('/barchart', methods=['GET', 'POST'])
