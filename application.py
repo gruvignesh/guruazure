@@ -15,7 +15,6 @@ import json
 # import random
 #import redis
 app = Flask(__name__)
-connection = pypyodbc.connect("Driver={ODBC Driver 17 for SQL Server};Server=tcp:gurucloud.database.windows.net,1433;Database=gurudb;Uid=gurucloud;Pwd=Guruearthquake1;")
 
 @app.route('/')
 def hello_world():
